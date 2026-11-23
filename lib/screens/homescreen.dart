@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../theme/palette.dart';
+import 'buyflow.dart';
+import 'sellflow.dart';
+import 'morescreens.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,9 +16,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static const _tabs = <Widget>[
     _HomeTab(),
-    _TabPlaceholder('Cards'),
-    _TabPlaceholder('Wallet'),
-    _TabPlaceholder('Profile'),
+   CardsScreen(),
+    WalletScreen(),
+    ProfileScreen(),
   ];
 
   @override
@@ -55,15 +58,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class _TabPlaceholder extends StatelessWidget {
-  const _TabPlaceholder(this.name);
-  final String name;
-
-  @override
-  Widget build(BuildContext context) =>
-      Center(child: Text('$name screen goes here'));
-}
-
 class _HomeTab extends StatelessWidget {
   const _HomeTab();
 
@@ -92,31 +86,62 @@ class _HomeTab extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: () {
-                // TODO: open notifications
-              },
+             onPressed: () => Navigator.push(
+  context,
+  MaterialPageRoute(builder: (_) => const NotificationsScreen()),
+),
               icon: const Icon(Icons.notifications_none_rounded),
               tooltip: 'Notifications',
             ),
           ],
         ),
-        const SizedBox(height: 20),
-        const _WalletCard(),
-        const SizedBox(height: 24),
+         SizedBox(height: 20),
+         _WalletCard(),
+         SizedBox(height: 24),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            _QuickAction(icon: Icons.shopping_bag_outlined, label: 'Buy', color: Palette.teal),
-            _QuickAction(icon: Icons.sell_outlined, label: 'Sell', color: Palette.marigold),
-            _QuickAction(icon: Icons.swap_horiz_rounded, label: 'Trade', color: Palette.rose),
-            _QuickAction(icon: Icons.currency_bitcoin_rounded, label: 'Crypto', color: Palette.paper),
+          children: [
+            _QuickAction(icon: Icons.shopping_bag_outlined, 
+            label: 'Buy',
+             color: Palette.teal,
+             onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) =>  CardsScreen()),
+             ),
+             ),
+            _QuickAction(
+  icon: Icons.sell_outlined,
+  label: 'Sell',
+  color: Palette.marigold,
+  onTap: () => Navigator.push(
+    context,
+    MaterialPageRoute(builder: (_) =>  SellScreen()),
+  ),
+),
+           _QuickAction(
+  icon: Icons.swap_horiz_rounded,
+  label: 'Trade',
+  color: Palette.rose,
+  onTap: () => Navigator.push(
+    context,
+    MaterialPageRoute(builder: (_) => const TradeScreen()),
+  ),
+),
+          _QuickAction(
+  icon: Icons.currency_bitcoin_rounded,
+  label: 'Crypto',
+  color: Palette.paper,
+  onTap: () => Navigator.push(
+    context,
+    MaterialPageRoute(builder: (_) => const CryptoScreen()),
+  ),
+),
           ],
         ),
-        const SizedBox(height: 28),
+       SizedBox(height: 28),
         Text('Recent activity',
             style: text.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
-        const SizedBox(height: 12),
-        // Sample data. Replace with real orders from your backend.
+         SizedBox(height: 12),
         const _ActivityTile(
           title: 'Sell order',
           subtitle: 'Shopping card, under review',
@@ -161,7 +186,7 @@ class _WalletCard extends StatelessWidget {
                 fontSize: 14,
               )),
           const SizedBox(height: 6),
-          const Text('\$1,250.00',
+          const Text('\$0,000.00',
               style: TextStyle(
                 color: Palette.night,
                 fontWeight: FontWeight.w900,
@@ -180,9 +205,10 @@ class _WalletCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  onPressed: () {
-                    // TODO: open add money
-                  },
+                  onPressed: () => Navigator.push(
+  context,
+  MaterialPageRoute(builder: (_) => const AddMoneyScreen()),
+),
                   child: const Text('Add money'),
                 ),
               ),
@@ -197,10 +223,11 @@ class _WalletCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  onPressed: () {
-                    // TODO: open withdraw
-                  },
-                  child: const Text('Withdraw'),
+                  onPressed: () => Navigator.push(
+  context,
+  MaterialPageRoute(builder: (_) => const WithdrawScreen()),
+),
+                  child: Text('Withdraw'),
                 ),
               ),
             ],
@@ -216,21 +243,21 @@ class _QuickAction extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.color,
+    this.onTap,
   });
 
   final IconData icon;
   final String label;
   final Color color;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(16),
-      onTap: () {
-        // TODO: open $label flow
-      },
+      onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.all(4),
+        padding: EdgeInsets.all(4),
         child: Column(
           children: [
             Container(

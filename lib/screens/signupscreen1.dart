@@ -1,10 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../theme/palette.dart';
-import 'homescreen.dart';
+//import 'homescreen.dart';
 import 'legalcontent.dart';
 import 'legalscreen.dart';
 import 'loginscreen2.dart';
+import 'idverificationscreen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -117,12 +118,10 @@ class _SignupScreenState extends State<SignupScreen> {
     final formOk = _formKey.currentState!.validate();
     setState(() => _termsError = !_agreed);
     if (!formOk || !_agreed) return;
-
-    // TODO: create the account on your backend, then go to ID verification.
     Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const HomeScreen()),
-    );
+  context,
+  MaterialPageRoute(builder: (_) => const IdVerificationScreen()),
+);
   }
 
   @override
@@ -322,7 +321,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           style: TextStyle(color: Palette.rose, fontSize: 12),
                         ),
                       ),
-                    const SizedBox(height: 20),
+                     SizedBox(height: 20),
                     SizedBox(
                       width: double.infinity,
                       height: 54,
@@ -335,7 +334,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                         ),
                         onPressed: _submit,
-                        child: const Text(
+                        child: Text(
                           'Create account',
                           style: TextStyle(
                             fontWeight: FontWeight.w800,
@@ -353,6 +352,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             builder: (_) =>  LoginScreen(),
                           ),
                         ),
+                        
                         child: Text(
                           'Already have an account? Log in',
                           style: TextStyle(color: Palette.marigold),

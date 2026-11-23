@@ -239,7 +239,7 @@ class GiftCardTile extends StatelessWidget {
           Text(
             amount,
             style: TextStyle(
-              color: const Color.fromARGB(255, 12, 4, 126),
+              color:  Color.fromARGB(255, 12, 4, 126),
               fontWeight: FontWeight.w900,
               fontSize: 30,
             ),
